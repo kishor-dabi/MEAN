@@ -1,6 +1,6 @@
 # MEAN
 
-Steps to run applocation :: 
+Steps to run application :: 
 
 1. run "<b>npm install</b>" to install packages on both back-end and UI.
 2. run "<b>npm start</b>" on both directory path to start the Server
