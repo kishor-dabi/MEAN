@@ -1,0 +1,45 @@
+<div class="container-fluid">
+    <div class="row mt-2">
+
+        <div class="col-md-4">
+
+            <div class="card" style="width: 18rem;">
+                <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+                <div class="card-body">
+                    <h5 class="card-title">Total Developer</h5>
+                    <p class="card-text">{{counts.developer}} </p>
+                    <a [routerLink]="['/developer']" routerLinkActive="router-link-active"  class="btn btn-primary">View All developer</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+
+            <div class="card" style="width: 18rem;">
+                <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+                <div class="card-body">
+                    <h5 class="card-title">Total Tasks</h5>
+                    <p class="card-text">{{counts.totaltask}} </p>
+                    <a [routerLink]="['/tasks']" routerLinkActive="router-link-active"  class="btn btn-primary">View All Task</a>
+                </div>
+            </div>
+        </div>
+        <ng-container  *ngIf="counts.task?.length">
+
+            <div class="col-md-4" *ngFor="let item of counts.task">
+                
+                <div class="card" style="width: 18rem;">
+                    <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+                    <div class="card-body">
+                        <h5 class="card-title text-capitalize">{{item._id}} Tasks</h5>
+                        <p class="card-text">{{item.count}} </p>
+                        <a [routerLink]="['/tasks']" routerLinkActive="router-link-active"  class="btn btn-primary">View All Task</a>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+    </div>
+</div>
+
+
+<!-- </div> -->

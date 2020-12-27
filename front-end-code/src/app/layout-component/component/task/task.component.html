@@ -1,0 +1,116 @@
+<button type="button" *ngIf="user_type==1" class="btn btn-primary mt-2 float-right mb-3" data-toggle="modal" data-target="#exampleModalCenter">
+    Create Task  
+  </button>
+
+<div class="table-responsive mt-3">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title </th>
+                <th>Description </th>
+                <th>Skills </th>
+                <th>Manager </th>
+                <th>Developer </th>
+                <th>status </th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of tasklists">
+               
+                    <td>{{item.title}} </td>
+                    <td>{{item.description}} </td>
+                    <td>{{item.skill_set}} </td>
+                    <td>{{item.user_id ? item.user_id.name : '-'}} </td>
+                    <td>{{item.developer ? item.developer.name : '-'}} </td>
+                    <td>{{item.status}} </td>
+                    <td>
+                        <button class="btn" data-toggle="modal" data-target="#exampleModalCenter" (click)="gettaskByID(item.id)"><i class="fa fa-edit"></i></button>
+                        <button class="btn" *ngIf="user_type==1" (click)="deleteTask(item.id)"><i class="fa fa-trash"></i></button>
+                    </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+
+
+
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Task</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form #addTask="ngForm">
+        <div class="modal-body">
+            
+                <div class="form-group" *ngIf="user_type==1">
+                  <label for="exampleInputEmail1">Title</label>
+                  <input type="text" name="title" required #title_name='ngModel' class="form-control" id="exampleInputEmail1" [(ngModel)]="taskObj.title"  placeholder="title">
+                  <small *ngIf="addTask.submitted && title_name.errors && title_name.errors.required" class="form-text required-text ">required.</small>
+                </div>
+
+                <div class="form-group" *ngIf="user_type==1">
+                    <label for="description">Description</label>
+                    <input type="text"  required #description='ngModel' class="form-control" id="description" name="description" [(ngModel)]="taskObj.description"  placeholder="description">
+                    <small *ngIf="addTask.submitted && description.errors && description.errors.required" class="form-text required-text ">required.</small>
+                  </div>
+
+                  <div class="form-group" *ngIf="user_type==1">
+                    <label for="Skill">Skills</label>
+                    <input type="text" name="skill_set" required #skill_set="ngModel" class="form-control" id="Skill" [(ngModel)]="taskObj.skill_set"  placeholder="Skill">
+                    <small *ngIf="addTask.submitted && skill_set.errors && skill_set.errors.required" class="form-text required-text ">required.</small>
+                  </div>
+                  <div class="form-group" *ngIf="user_type==1">
+                    <label for="due_date">Due Date</label>
+                    <input type="text" [max]="maxDate" name="due_date" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" class="form-control" id="due_date" [(ngModel)]="taskObj.due_date"  placeholder="Due Date">
+                    <owl-date-time  [pickerType]='"calendar"' #dt1></owl-date-time>
+                    <!-- <small *ngIf="addTask.submitted && skill_set.errors && skill_set.errors.required" class="form-text required-text ">required.</small> -->
+                  </div>
+
+                  <div class="form-group" *ngIf="user_type==1">
+                    <label for="user_id">Manager</label>
+                    <select name="user_id" #user_id="ngModel" required class="form-control" id="user_id" [(ngModel)]="taskObj.user_id" >
+                        <option value="">Select</option>
+                        <option *ngFor="let manager of managerlists" value="{{manager.id}}">
+                            {{manager.name}}
+                        </option>
+                    </select>
+                    <small *ngIf="addTask.submitted && user_id.errors && user_id.errors.required" class="form-text required-text ">required.</small>
+                  </div>
+
+                  <div class="form-group" *ngIf="user_type==2">
+                    <label for="status">Status</label>
+                    <select name="status" #status="ngModel"  class="form-control" id="status" [(ngModel)]="taskObj.status" >
+                        <option value="">Select</option>
+                        <option value="testing">Testing</option>
+                        <option value="pending">Pending</option>
+                        <option value="close">Close</option>
+                       
+                    </select>
+                  </div>
+
+                  <div class="form-group" *ngIf="user_type==2">
+                    <label for="developer">Developer</label>
+                    <select name="developer" #developer="ngModel" required class="form-control" id="developer" [(ngModel)]="taskObj.developer" >
+                        <option value="">Select</option>
+                        <option *ngFor="let item of devList" value="{{item.id}}">
+                            {{item.name}}
+                        </option>
+                    </select>
+                    <small *ngIf="addTask.submitted && developer.errors && developer.errors.required" class="form-text required-text ">required.</small>
+                  </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" (click)="saveTask(addTask)">Submit</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>

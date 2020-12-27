@@ -1,0 +1,62 @@
+<form #addTask="ngForm">
+    <div class="modal-body">
+        
+            <div class="form-group">
+              <label for="exampleInputEmail1">Name</label>
+              <input type="text" name="name" autocomplete="off" required #title_name='ngModel' class="form-control" id="exampleInputEmail1" [(ngModel)]="userObj.name"  placeholder="Name">
+              <small *ngIf="addTask.submitted && title_name.errors && title_name.errors.required" class="form-text required-text ">required.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Email</label>
+                <input type="email"  required #description='ngModel' class="form-control" id="description" name="description" [(ngModel)]="userObj.email"  placeholder="Email">
+                <small *ngIf="addTask.submitted && description.errors && description.errors.required" class="form-text required-text ">required.</small>
+                <small *ngIf="addTask.submitted && description.errors && description.errors.email" class="form-text required-text ">please enter valid email.</small>
+              </div>
+
+              <div class="form-group">
+                <label for="Skill">Skills</label>
+                <input type="text" name="skill_set" required #skill_set="ngModel" class="form-control" id="Skill" [(ngModel)]="userObj.skills"  placeholder="Skill">
+                <small *ngIf="addTask.submitted && skill_set.errors && skill_set.errors.required" class="form-text required-text ">required.</small>
+              </div>
+              <div class="form-group">
+                <label for="due_date">Date of Birth</label>
+                <input type="text" [max]="maxDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" #date_of_birth="ngModel" required name="due_date" class="form-control" id="due_date" [(ngModel)]="userObj.date_of_birth"  placeholder="DOB">
+                <owl-date-time  [pickerType]='"calendar"' #dt1></owl-date-time>
+
+                <small *ngIf="addTask.submitted && date_of_birth.errors && date_of_birth.errors.required" class="form-text required-text ">required.</small>
+              </div>
+              <div class="form-group" >
+                <label for="password">Password</label>
+                <input type="password" autocomplete="off" #password="ngModel" required name="password" class="form-control" id="password" [(ngModel)]="userObj.password"  placeholder="Password">
+                <small *ngIf="addTask.submitted && password.errors && password.errors.required" class="form-text required-text ">required.</small>
+              </div>
+
+              <!-- <div class="form-group">
+                <label for="user_id"></label>
+                <select name="user_id" #user_id="ngModel" required class="form-control" id="user_id" [(ngModel)]="userObj.user_id" >
+                    <option value="">Select</option>
+                    <option *ngFor="let manager of managerlists" value="{{manager.id}}">
+                        {{manager.name}}
+                    </option>
+                </select>
+                <small *ngIf="addTask.submitted && user_id.errors && user_id.errors.required" class="form-text required-text ">required.</small>
+              </div> -->
+
+              <!-- <div class="form-group">
+                <label for="status">Status</label>
+                <select name="status" #status="ngModel"  class="form-control" id="status" [(ngModel)]="userObj.status" >
+                    <option value="">Select</option>
+                    <option value="testing">Testing</option>
+                    <option value="pending">Pending</option>
+                    <option value="close">Close</option>
+                   
+                </select>
+              </div> -->
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" [routerLink]="['/login']" routerLinkActive="router-link-active"  data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" (click)="saveDev(addTask)">Submit</button>
+        </div>
+    </form>

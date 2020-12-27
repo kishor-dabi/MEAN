@@ -1,0 +1,92 @@
+<button type="button" (click)="resetObj()" class="btn btn-primary mt-2 float-right mb-3" data-toggle="modal" data-target="#exampleModalCenter">
+    New Developer
+  </button>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name </th>
+                <th>Email </th>
+                <th>Skills </th>
+                <th>Age </th>
+                <th>Date of birth </th>
+                <!-- <th>status </th> -->
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of tasklists">
+               
+                    <td>{{item.name}} </td>
+                    <td>{{item.email}} </td>
+                    <td>{{item.skills}} </td>
+                    <td>{{item.age}} </td>
+                    <td>{{item.date_of_birth }} </td>
+                    <!-- <td>{{item.status}} </td> -->
+                    <td>
+                        <button class="btn" data-toggle="modal" data-target="#exampleModalCenter" (click)="getDevByID(item.id)"><i class="fa fa-edit"></i></button>
+                        <button class="btn" (click)="deleteDev(item.id)"><i class="fa fa-trash"></i></button>
+                    </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+
+
+
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Developer</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form #addTask="ngForm">
+        <div class="modal-body">
+            
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Name</label>
+                  <input type="text" name="name" autocomplete="off" required #title_name='ngModel' class="form-control" id="exampleInputEmail1" [(ngModel)]="taskObj.name"  placeholder="Name">
+                  <small *ngIf="addTask.submitted && title_name.errors && title_name.errors.required" class="form-text required-text ">required.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Email</label>
+                    <input type="email"  required #description='ngModel' class="form-control" id="description" name="description" [(ngModel)]="taskObj.email"  placeholder="Email">
+                    <small *ngIf="addTask.submitted && description.errors && description.errors.required" class="form-text required-text ">required.</small>
+                    <small *ngIf="addTask.submitted && description.errors && description.errors.email" class="form-text required-text ">please enter valid email.</small>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="Skill">Skills</label>
+                    <input type="text" name="skill_set" required #skill_set="ngModel" class="form-control" id="Skill" [(ngModel)]="taskObj.skills"  placeholder="Skill">
+                    <small *ngIf="addTask.submitted && skill_set.errors && skill_set.errors.required" class="form-text required-text ">required.</small>
+                  </div>
+                  <div class="form-group">
+                    <label for="due_date">Date of Birth</label>
+                    <input type="text"  [max]="maxDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" #date_of_birth="ngModel" required name="due_date" class="form-control" id="due_date" [(ngModel)]="taskObj.date_of_birth"  placeholder="DOB">
+                    <owl-date-time  [pickerType]='"calendar"' #dt1></owl-date-time>
+                    
+                    <small *ngIf="addTask.submitted && date_of_birth.errors && date_of_birth.errors.required" class="form-text required-text ">required.</small>
+                  </div>
+                  <div class="form-group" *ngIf="!taskObj.id">
+                    <label for="password">Password</label>
+                    <input type="password" autocomplete="off" #password="ngModel" required name="password" class="form-control" id="password" [(ngModel)]="taskObj.password"  placeholder="Password">
+                    <small *ngIf="addTask.submitted && password.errors && password.errors.required" class="form-text required-text ">required.</small>
+                  </div>
+
+             
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" (click)="saveDev(addTask)">Submit</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
